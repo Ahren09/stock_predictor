@@ -1,4 +1,8 @@
-from tensorflow import keras
+from keras.models import Sequential
+from keras.layers import Activation, Dense
+from keras.layers import LSTM
+from keras.layers import Dropout
+
 
 def setup_model():
     """
@@ -12,7 +16,14 @@ def train_model(train_data, model, ts=1000, epochs=10):
     Takes a training dataset and a model and returns a trained model 
     after ts timesteps.
     """
-    raise NotImplementedError
+    model = Sequential()
+    model.add(LSTM(neurons, input_shape=(inputs.shape[1], inputs.shape[2])))
+    model.add(Dropout(dropout))
+    model.add(Dense(units=output_size))
+    model.add(Activation(active_func))
+    
+    model.compile(loss=loss, optimizer=optimizer)
+    return model
 
 def validate_model(validation_data, model, ts=1000):
     """

@@ -10,12 +10,18 @@ def shape_for_keras(data):
     """
     raise NotImplementedError
 
-def train_val_test_split(data):
+def train_val_test_split(data, train_size=0.6, test_size=0.2):
     """
     Returns three arrays. 3/4 data (train_set), 1/8 (validation_set),
     1/8 (test_set)
     """
-    raise NotImplementedError
+    data_size = len(data)
+    end_train = int(data_size*train_size)
+    end_val = int(data_size*(train_size+test_size))
+    train = data.iloc[:end_train]
+    val = data.iloc[end_train:end_val]
+    test = data.iloc[end_val:]
+    return train, val, test
 
 def generate_ta(data):
     """
